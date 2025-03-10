@@ -31,9 +31,16 @@ async function run() {
 
     const eventCollection = client.db("communionHUb").collection("events");
 
-
+    // fetch all the events from collection
     app.get("/events", async (req, res) => {
         const result = await eventCollection.find().toArray();
+        res.send(result);
+    });
+
+    // add event data by user
+    app.post("/addEvent", async (req, res) => {
+        const addEvent = req.body;
+        const result = await eventCollection.insertOne(addEvent);
         res.send(result);
     })
 
